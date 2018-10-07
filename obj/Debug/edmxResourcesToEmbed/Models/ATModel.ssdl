@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="asset_dbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="employee">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="first_name" Type="nvarchar" MaxLength="50" />
+    <Property Name="middle_name" Type="nvarchar" MaxLength="50" />
+    <Property Name="last_name" Type="nvarchar" MaxLength="50" />
+    <Property Name="preferred_name" Type="nvarchar" MaxLength="150" />
+    <Property Name="street_address" Type="nvarchar" MaxLength="150" />
+    <Property Name="suite" Type="nvarchar" MaxLength="50" />
+    <Property Name="city" Type="nvarchar" MaxLength="50" />
+    <Property Name="state" Type="nvarchar" MaxLength="50" />
+    <Property Name="home_phone" Type="nvarchar" MaxLength="50" />
+    <Property Name="work_phone" Type="nvarchar" MaxLength="50" />
+    <Property Name="cell_phone" Type="nvarchar" MaxLength="50" />
+    <Property Name="email" Type="nvarchar" MaxLength="50" />
+    <Property Name="emergency_name" Type="nvarchar" MaxLength="150" />
+    <Property Name="emergency_relationship" Type="nvarchar" MaxLength="50" />
+    <Property Name="emergency_phone" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="inv">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="inv_num" Type="nvarchar" MaxLength="20" />
+    <Property Name="purchase" Type="date" />
+    <Property Name="cost" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="description" Type="nvarchar" MaxLength="250" />
+    <Property Name="location" Type="nvarchar" MaxLength="250" />
+    <Property Name="contact" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_inv_employee">
+    <End Role="employee" Type="Self.employee" Multiplicity="1" />
+    <End Role="inv" Type="Self.inv" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="employee">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="inv">
+        <PropertyRef Name="contact" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="asset_dbModelStoreContainer">
+    <EntitySet Name="employee" EntityType="Self.employee" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="inv" EntityType="Self.inv" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_inv_employee" Association="Self.FK_inv_employee">
+      <End Role="employee" EntitySet="employee" />
+      <End Role="inv" EntitySet="inv" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

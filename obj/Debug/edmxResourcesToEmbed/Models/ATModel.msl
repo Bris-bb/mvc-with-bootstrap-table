@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="asset_dbModelStoreContainer" CdmEntityContainer="asset_dbEntities">
+    <EntitySetMapping Name="employees">
+      <EntityTypeMapping TypeName="asset_dbModel.employee">
+        <MappingFragment StoreEntitySet="employee">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="first_name" ColumnName="first_name" />
+          <ScalarProperty Name="middle_name" ColumnName="middle_name" />
+          <ScalarProperty Name="last_name" ColumnName="last_name" />
+          <ScalarProperty Name="preferred_name" ColumnName="preferred_name" />
+          <ScalarProperty Name="street_address" ColumnName="street_address" />
+          <ScalarProperty Name="suite" ColumnName="suite" />
+          <ScalarProperty Name="city" ColumnName="city" />
+          <ScalarProperty Name="state" ColumnName="state" />
+          <ScalarProperty Name="home_phone" ColumnName="home_phone" />
+          <ScalarProperty Name="work_phone" ColumnName="work_phone" />
+          <ScalarProperty Name="cell_phone" ColumnName="cell_phone" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="emergency_name" ColumnName="emergency_name" />
+          <ScalarProperty Name="emergency_relationship" ColumnName="emergency_relationship" />
+          <ScalarProperty Name="emergency_phone" ColumnName="emergency_phone" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="invs">
+      <EntityTypeMapping TypeName="asset_dbModel.inv">
+        <MappingFragment StoreEntitySet="inv">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="inv_num" ColumnName="inv_num" />
+          <ScalarProperty Name="purchase" ColumnName="purchase" />
+          <ScalarProperty Name="cost" ColumnName="cost" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="location" ColumnName="location" />
+          <ScalarProperty Name="contact" ColumnName="contact" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

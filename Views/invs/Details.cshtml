@@ -1,0 +1,51 @@
+﻿@model AT.Models.inv
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.inv_num)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.inv_num)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.purchase)
+        </dt>
+
+        <dd>
+            @Html.TextBoxFor(model => model.purchase, "{0:yyyy-MM-dd}", new { @style = "border:none" })
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cost)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.location)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.location)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.employee.first_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.employee.first_name)
+        </dd>
+
+    </dl> 

@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="asset_dbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="employee">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="first_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="middle_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="last_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="preferred_name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="street_address" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="suite" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="city" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="state" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="home_phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="work_phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="cell_phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="emergency_name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="emergency_relationship" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="emergency_phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="invs" Relationship="Self.FK_inv_employee" FromRole="employee" ToRole="inv" />
+  </EntityType>
+  <EntityType Name="inv">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="inv_num" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="purchase" Type="DateTime" Precision="0" />
+    <Property Name="cost" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="location" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="contact" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="employee" Relationship="Self.FK_inv_employee" FromRole="inv" ToRole="employee" />
+  </EntityType>
+  <Association Name="FK_inv_employee">
+    <End Role="employee" Type="Self.employee" Multiplicity="1" />
+    <End Role="inv" Type="Self.inv" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="employee">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="inv">
+        <PropertyRef Name="contact" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="asset_dbEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="employees" EntityType="Self.employee" />
+    <EntitySet Name="invs" EntityType="Self.inv" />
+    <AssociationSet Name="FK_inv_employee" Association="Self.FK_inv_employee">
+      <End Role="employee" EntitySet="employees" />
+      <End Role="inv" EntitySet="invs" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

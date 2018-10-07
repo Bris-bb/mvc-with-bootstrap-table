@@ -1,0 +1,174 @@
+﻿@model AT.ViewModel.InvCRUD
+@{
+    AT.Models.inv createInv = Model.createInv;
+    List<AT.Models.inv> readInv = Model.readInv;
+}
+
+@using AT.Models
+
+<style>
+    .disable_input {
+        border: none;
+    }
+</style>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div style="margin-top: 20px;"></div>
+<p>
+    <button class="btn btn-info btn-lg anchorCreate">
+        <i class="glyphicon  glyphicon-plus"></i>
+        Create New
+    </button>
+</p>
+<div style="margin-top: 20px;"></div>
+<table id="inv_table" class=" display">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.createInv.inv_num)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.createInv.purchase)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.createInv.cost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.createInv.description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.createInv.location)
+            </th>
+            <th>
+                Contact
+            </th>
+            <th style="text-align:center;">
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody style="cursor: pointer;user-select: none;">
+        @foreach (var item in Model.readInv)
+        {
+            <tr class="anchorEditTR" data-id="@item.id">
+                <td>
+                    @Html.DisplayFor(modelItem => item.inv_num)
+                </td>
+                <td>
+                    @Html.TextBoxFor(modelItem => item.purchase, "{0:dd/MM/yyyy}", new { @class = "disable_input" })
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.cost)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.location)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.employee.first_name)
+                </td>
+                <td style="text-align:center;">
+
+                    @*<span class="btn btn-info anchorEdit" data-id="@item.id">
+                        <i class="glyphicon  glyphicon-edit"></i>
+                        Edit
+                    </span>
+                    <span class="btn btn-success anchorDetail" data-id="@item.id">
+                        <i class="glyphicon  glyphicon-comment"></i>
+                        Details
+                    </span>*@
+                    <span class="btn btn-danger anchorDelete" data-id="@item.id">
+                        <i class="glyphicon   glyphicon-remove"></i>
+                    </span>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="modal fade" id="newModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Asset Tracker</h4>
+            </div>
+            <div class="modal-body">
+                <div id='newModalContent'></div>
+            </div>
+            @*<div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>*@
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script>
+
+    $(document).ready(function () {
+        $('#inv_table').DataTable();
+    });
+
+</script>
+
+<script>
+    var TeamDetailPostBackURL = '../invs/Details';
+    $(function () {
+        function ajaxEvent(flg, url) {
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: url,
+                contentType: "application/json; charset=utf-8",
+                data: {},
+                datatype: "json",
+                success: function (data) {
+                    //if (flg == 'details') {
+                    $('#newModalContent').html(data);
+                    $('#newModal').modal(options);
+                    $('#newModal').modal('show');
+                    //}
+                },
+                error: function () {
+                    alert("Dynamic content load failed.");
+                }
+            });
+        }
+        $("body").on('click', ".anchorDetail", function () {
+            var $buttonClicked = $(this);
+            var id = $buttonClicked.attr('data-id');
+            ajaxEvent('details', './invs/Details/' + id);
+        });
+        $("body").on('click', ".anchorCreate", function () {
+            ajaxEvent('create', './invs/Create');
+        });
+        $("body").on('dblclick', ".anchorEditTR", function () {
+            var $buttonClicked = $(this);
+            var id = $buttonClicked.attr('data-id');
+            ajaxEvent('edit', './invs/Edit/' + id);
+        });
+        $("body").on('click', ".anchorDelete", function () {
+            var $buttonClicked = $(this);
+            var id = $buttonClicked.attr('data-id');
+            ajaxEvent('delete', './invs/Delete/' + id);
+        });
+
+        //$("#closebtn").on('click',function(){
+        //    $('#myModal').modal('hide');
+
+        $("#closbtn").click(function () {
+            $('#newModal').modal('hide');
+        });
+    });
+
+</script>
+
+
